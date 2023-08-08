@@ -3,14 +3,14 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/afreen23/pokedex/internals/pokeapi"
 )
-
-func next20Locations() {}
-
-func prev20Locations() {}
 
 func usage() {
 	fmt.Println("Usage:")
+	fmt.Println("map:  Prints the next 20 location areas of Pokemon world")
+	fmt.Println("mapb:  Prints the previous 20 location areas of Pokemon world")
 	fmt.Println("help: Displays a help message")
 	fmt.Println("exit: Exit the Pokedex")
 	fmt.Println("")
@@ -30,8 +30,8 @@ func main() {
 	commands := map[string]func(){
 		"help": help,
 		"exit": exit,
-		"map":  next20Locations,
-		"mapb": prev20Locations,
+		"map":  pokeapi.Next20Locations,
+		"mapb": pokeapi.Prev20Locations,
 	}
 	var input string
 	for {
