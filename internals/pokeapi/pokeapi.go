@@ -1,7 +1,6 @@
 package pokeapi
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -17,12 +16,11 @@ type Location struct {
 	Name string `json:"name"`
 }
 
-var ID int = 1
-var current_id *int = &ID
+var ID = 1
 
 var cache *pokecache.Cache = pokecache.NewCache(5 * time.Second)
 
-func fetchData(id int) ([]byte, error) {
+func Get(id int) ([]byte, error) {
 	fetch_url := fmt.Sprintf("%s/%v", base_url, id)
 	// finding in cache first
 	res, ok := cache.Get(fetch_url)
@@ -43,49 +41,4 @@ func fetchData(id int) ([]byte, error) {
 		return body, nil
 	}
 	return res, nil
-}
-
-func printError(err error) {
-	fmt.Println(err)
-}
-
-func Next20Locations() {
-	locations := Location{}
-	limit := 20
-	if *current_id != 1 {
-		limit = limit + *current_id
-	}
-	for ; *current_id <= limit; *current_id = *current_id + 1 {
-		res, err := fetchData(*current_id)
-		if err != nil {
-			printError(err)
-		}
-		err = json.Unmarshal(res, &locations)
-		if err != nil {
-			printError(err)
-		}
-		fmt.Println(locations.Name)
-	}
-	*current_id = *current_id - 1
-}
-
-func Prev20Locations() {
-	if *current_id == 1 {
-		fmt.Printf("No previous locations to look back\n")
-		return
-	}
-	locations := Location{}
-	limit := *current_id - 20
-	for ; *current_id > limit; *current_id = *current_id - 1 {
-		res, err := fetchData(*current_id)
-		if err != nil {
-			printError(err)
-		}
-		err = json.Unmarshal(res, &locations)
-		if err != nil {
-			printError(err)
-		}
-		fmt.Println(locations.Name)
-	}
-	*current_id = *current_id + 1
 }
