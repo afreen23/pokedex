@@ -7,22 +7,25 @@ import (
 )
 
 func main() {
-	commands := map[string]func(){
-		"help": command.Help,
-		"exit": command.Exit,
-		"map":  command.Map,
-		"mapb": command.Mapb,
-	}
-	var input string
+	var input, option string
 	for {
 		fmt.Print("pokedex > ")
-		fmt.Scan(&input)
-		handler, ok := commands[input]
-		if !ok {
+		fmt.Scanf("%s%s", &input, &option)
+		fmt.Println()
+		switch input {
+		case "help":
+			command.Help()
+		case "exit":
+			command.Exit()
+		case "map":
+			command.Map()
+		case "mapb":
+			command.Mapb()
+		case "explore":
+			command.Explore(option)
+		default:
 			fmt.Println("Invalid command")
 			command.Usage()
-			break
 		}
-		handler()
 	}
 }

@@ -12,15 +12,20 @@ import (
 var base_url = "https://pokeapi.co/api/v2/location-area/"
 
 type Location struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID                int    `json:"id"`
+	Name              string `json:"name"`
+	PokemonEncounters []struct {
+		Pokemon struct {
+			Name string `json:"name"`
+		} `json:"pokemon"`
+	} `json:"pokemon_encounters"`
 }
 
 var ID = 1
 
 var cache *pokecache.Cache = pokecache.NewCache(5 * time.Second)
 
-func Get(id int) ([]byte, error) {
+func Get[T int | string](id T) ([]byte, error) {
 	fetch_url := fmt.Sprintf("%s/%v", base_url, id)
 	// finding in cache first
 	res, ok := cache.Get(fetch_url)

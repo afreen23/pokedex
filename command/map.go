@@ -22,6 +22,6 @@ func Map() {
 		if err != nil {
 			fmt.Print(err)
 		}
-		fmt.Println(locations)
+		fmt.Println(locations.Name)
 	}
 }

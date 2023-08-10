@@ -1,6 +1,7 @@
 package pokecache
 
 import (
+	"fmt"
 	"sync"
 	"time"
 )
@@ -43,6 +44,7 @@ func (c *Cache) reapLoop(t time.Duration) {
 					if time.Since(val.createdAt) >= t {
 						c.mux.Lock()
 						delete(c.cache, key)
+						fmt.Println("REAPED", key)
 						c.mux.Unlock()
 					}
 				}

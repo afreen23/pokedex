@@ -22,7 +22,7 @@ func Mapb() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Println(locations)
+		fmt.Println(locations.Name)
 	}
 	pokeapi.ID = pokeapi.ID - 20
 }
