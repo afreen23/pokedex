@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
+
+	"github.com/afreen23/pokedex/internals/pokecache"
 )
 
 var base_url = "https://pokeapi.co/api/v2/location-area/"
@@ -17,20 +20,29 @@ type Location struct {
 var ID int = 1
 var current_id *int = &ID
 
+var cache *pokecache.Cache = pokecache.NewCache(5 * time.Second)
+
 func fetchData(id int) ([]byte, error) {
 	fetch_url := fmt.Sprintf("%s/%v", base_url, id)
-	res, err := http.Get(fetch_url)
-	if err != nil {
-		return nil, err
+	// finding in cache first
+	res, ok := cache.Get(fetch_url)
+	// making GET request if not found in cache
+	if !ok {
+		res, err := http.Get(fetch_url)
+		if err != nil {
+			return nil, err
+		}
+		body, err := io.ReadAll(res.Body)
+		if res.StatusCode > 299 {
+			return nil, fmt.Errorf("response failed with status code: %d and \nbody: %s\n url: %s", res.StatusCode, body, fetch_url)
+		}
+		if err != nil {
+			return nil, err
+		}
+		cache.Add(fetch_url, body)
+		return body, nil
 	}
-	body, err := io.ReadAll(res.Body)
-	if res.StatusCode > 299 {
-		return nil, fmt.Errorf("response failed with status code: %d and \nbody: %s\n url: %s", res.StatusCode, body, fetch_url)
-	}
-	if err != nil {
-		return nil, err
-	}
-	return body, nil
+	return res, nil
 }
 
 func printError(err error) {
