@@ -9,7 +9,9 @@ import (
 	"github.com/afreen23/pokedex/internals/pokecache"
 )
 
-var base_url = "https://pokeapi.co/api/v2/location-area/"
+var location_endpoint = "https://pokeapi.co/api/v2/location-area/"
+
+var pokemon_endpoint = "https://pokeapi.co/api/v2/pokemon/"
 
 type Location struct {
 	ID                int    `json:"id"`
@@ -26,7 +28,7 @@ var ID = 1
 var cache *pokecache.Cache = pokecache.NewCache(5 * time.Second)
 
 func Get[T int | string](id T) ([]byte, error) {
-	fetch_url := fmt.Sprintf("%s/%v", base_url, id)
+	fetch_url := fmt.Sprintf("%s/%v", location_endpoint, id)
 	// finding in cache first
 	res, ok := cache.Get(fetch_url)
 	// making GET request if not found in cache
@@ -46,4 +48,24 @@ func Get[T int | string](id T) ([]byte, error) {
 		return body, nil
 	}
 	return res, nil
+}
+
+func GetPokemon(name string) ([]byte, error) {
+	fetch_url := fmt.Sprintf("%s/%v", pokemon_endpoint, name)
+
+	res, err := http.Get(fetch_url)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := io.ReadAll(res.Body)
+	if res.StatusCode > 299 {
+		return nil, fmt.Errorf("response failed with status code: %d and \nbody: %s\n url: %s", res.StatusCode, body, fetch_url)
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	return body, nil
+
 }

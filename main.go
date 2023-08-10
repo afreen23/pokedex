@@ -23,6 +23,8 @@ func main() {
 			command.Mapb()
 		case "explore":
 			command.Explore(option)
+		case "catch":
+			command.Catch(option)
 		default:
 			fmt.Println("Invalid command")
 			command.Usage()
