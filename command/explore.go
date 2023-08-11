@@ -8,8 +8,13 @@ import (
 )
 
 func Explore(loc string) {
+	if loc == "" {
+		fmt.Println("No location provided!")
+		fmt.Println("Enter `explore <location-name>` to find pokemons")
+		return
+	}
 	fmt.Printf("Exploring %s city area ......\n", loc)
-	res, err := pokeapi.Get(loc)
+	res, err := pokeapi.GetLocation(loc)
 	if err != nil {
 		println("Encountered error", err)
 		return

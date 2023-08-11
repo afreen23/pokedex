@@ -10,11 +10,11 @@ import (
 func Map() {
 	locations := pokeapi.Location{}
 	limit := 20
-	if pokeapi.ID != 1 {
-		limit = limit + pokeapi.ID - 1
+	if pokeapi.LocationID != 1 {
+		limit = limit + pokeapi.LocationID - 1
 	}
-	for ; pokeapi.ID <= limit; pokeapi.ID++ {
-		res, err := pokeapi.Get(pokeapi.ID)
+	for ; pokeapi.LocationID <= limit; pokeapi.LocationID++ {
+		res, err := pokeapi.GetLocation(pokeapi.LocationID)
 		if err != nil {
 			fmt.Print(err)
 		}

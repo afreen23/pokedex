@@ -8,13 +8,13 @@ import (
 )
 
 func Mapb() {
-	if pokeapi.ID == 1 {
+	if pokeapi.LocationID == 1 {
 		fmt.Printf("No previous locations to look back\n")
 		return
 	}
 	locations := pokeapi.Location{}
-	for i := pokeapi.ID - 20; i < pokeapi.ID; i++ {
-		res, err := pokeapi.Get(i)
+	for i := pokeapi.LocationID - 20; i < pokeapi.LocationID; i++ {
+		res, err := pokeapi.GetLocation(i)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -24,5 +24,5 @@ func Mapb() {
 		}
 		fmt.Println(locations.Name)
 	}
-	pokeapi.ID = pokeapi.ID - 20
+	pokeapi.LocationID = pokeapi.LocationID - 20
 }

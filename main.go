@@ -4,10 +4,12 @@ import (
 	"fmt"
 
 	"github.com/afreen23/pokedex/command"
+	"github.com/afreen23/pokedex/internals/userpokedex"
 )
 
 func main() {
 	var input, option string
+	var p *userpokedex.Pokedex = userpokedex.NewPokedex()
 	for {
 		fmt.Print("pokedex > ")
 		fmt.Scanf("%s%s", &input, &option)
@@ -24,7 +26,7 @@ func main() {
 		case "explore":
 			command.Explore(option)
 		case "catch":
-			command.Catch(option)
+			command.Catch(option, p)
 		default:
 			fmt.Println("Invalid command")
 			command.Usage()
