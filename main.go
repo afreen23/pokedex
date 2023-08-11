@@ -11,7 +11,7 @@ func main() {
 	var input, option string
 	var p *userpokedex.Pokedex = userpokedex.NewPokedex()
 	for {
-		fmt.Print("pokedex > ")
+		fmt.Print("Pokedex > ")
 		fmt.Scanf("%s%s", &input, &option)
 		fmt.Println()
 		switch input {
@@ -29,9 +29,11 @@ func main() {
 			command.Catch(option, p)
 		case "inspect":
 			command.Inspect(option, p)
+		case "pokedex":
+			command.Pokedex(p)
 		default:
 			fmt.Println("Invalid command")
-			command.Usage()
+			fmt.Println("Type `help` to get the list of valid commands")
 		}
 	}
 }

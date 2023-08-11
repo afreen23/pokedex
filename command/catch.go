@@ -37,6 +37,7 @@ func Catch(pokemon string, p *userpokedex.Pokedex) {
 		return
 	} else {
 		fmt.Printf("%s was caught\n", pokemon)
+		fmt.Println("You may now inspect it with the inspect command.")
 		p.Pokemons[pokemon] = data
 	}
 
