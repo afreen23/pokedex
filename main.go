@@ -27,6 +27,8 @@ func main() {
 			command.Explore(option)
 		case "catch":
 			command.Catch(option, p)
+		case "inspect":
+			command.Inspect(option, p)
 		default:
 			fmt.Println("Invalid command")
 			command.Usage()
