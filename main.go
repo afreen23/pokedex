@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/afreen23/pokedex/command"
+	"github.com/afreen23/pokedex/commands"
 	"github.com/afreen23/pokedex/internals/userpokedex"
 )
 
@@ -16,21 +16,21 @@ func main() {
 		fmt.Println()
 		switch input {
 		case "help":
-			command.Help()
+			commands.Help()
 		case "exit":
-			command.Exit()
+			commands.Exit()
 		case "map":
-			command.Map()
+			commands.Map()
 		case "mapb":
-			command.Mapb()
+			commands.Mapb()
 		case "explore":
-			command.Explore(option)
+			commands.Explore(option)
 		case "catch":
-			command.Catch(option, p)
+			commands.Catch(option, p)
 		case "inspect":
-			command.Inspect(option, p)
+			commands.Inspect(option, p)
 		case "pokedex":
-			command.Pokedex(p)
+			commands.Pokedex(p)
 		default:
 			fmt.Println("Invalid command")
 			fmt.Println("Type `help` to get the list of valid commands")
