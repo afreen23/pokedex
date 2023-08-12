@@ -20,4 +20,4 @@ pokedex: Displays all the caught pokemons.
 
 ```
 ## High level diagram for map and mapb commands
-![High level diagram for map and mapb commands](https://github.com/afreen23/pokedex/tree/main/assets/high-level-overview-map-and-mapb.png)
+![High level diagram for map and mapb commands](/assets/high-level-overview-map-and-mapb.png)
