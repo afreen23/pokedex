@@ -49,7 +49,6 @@ func (c *Cache) reapLoop(t time.Duration) {
 	for range ticker.C {
 		c.reap(t)
 	}
-
 }
 
 func NewCache(interval time.Duration) *Cache {
